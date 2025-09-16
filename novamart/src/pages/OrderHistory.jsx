@@ -49,7 +49,7 @@ export default function OrderHistory() {
         <div className="oh-list">
           {list.map((o) => (
             <article key={o.id} className="oh-item">
-              {/* izquierda */}
+              {/* cosas de la izquierda */}
               <div className="oh-left">
                 <p className="oh-kicker">
                   {o.status === "Delivered"
@@ -90,7 +90,7 @@ export default function OrderHistory() {
                 </button>
               </div>
 
-              {/* derecha */}
+              {/* las cosas de la derecha */}
               <div className="oh-right">
                 <img src={o.image} alt={o.productName} className="oh-img" loading="lazy" />
               </div>

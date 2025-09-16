@@ -1,5 +1,4 @@
-﻿// src/pages/Categories.jsx
-import React, { useEffect, useMemo, useState } from "react";
+﻿import React, { useEffect, useMemo, useState } from "react";
 import { listProducts, listCategories } from "../services/products";
 import ProductCard from "../components/ProductCard";
 import Pagination from "../components/Pagination";
@@ -7,21 +6,19 @@ import "../styles/categories.css";
 
 export default function CategoriesPage() {
   const [raw, setRaw] = useState([]);
-  const [cats, setCats] = useState([]); // ya no se usa para pintar el sidebar, pero lo dejo por si lo necesitas en otra parte
+  const [cats, setCats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
+  const [showFilters, setShowFilters] = useState(false);
 
-  // ===== Mapa -> IDs reales de tu API =====
   const FIGMA_MAP = [
-    { label: "Electronics",       ids: [2] },      // Electronics
-    { label: "Clothing",          ids: [4, 43] },  // chappal, category_B
-    { label: "Home & Kitchen",    ids: [3, 5] },   // REST-Update... (muebles) + Miscellaneous (hogar)
-    { label: "Books",             ids: [3] },      // “Book” llega con category id=3
-    { label: "Sports & Outdoors", ids: [84, 4] },  // Running Shoes (84) + chappal (4)
+    { label: "Electronics",       ids: [2] },
+    { label: "Clothing",          ids: [4, 43] },
+    { label: "Home & Kitchen",    ids: [3, 5] },
+    { label: "Books",             ids: [3] },
+    { label: "Sports & Outdoors", ids: [84, 4] },
   ];
 
-  // filtros
-  // AHORA: checked por label (no por id): { "Electronics": true, ... }
   const [checked, setChecked] = useState({});
   const [price, setPrice] = useState({ min: 0, max: 999 });
   const [page, setPage] = useState(1);
@@ -52,7 +49,6 @@ export default function CategoriesPage() {
     };
   }, []);
 
-  // Filtrado: convierte labels seleccionados -> IDs y filtra productos
   const filtered = useMemo(() => {
     const selectedLabels = Object.keys(checked).filter((k) => checked[k]);
     const selectedIds = new Set(
@@ -75,13 +71,16 @@ export default function CategoriesPage() {
   const pageItems = filtered.slice(start, start + perPage);
   const pages = Math.max(1, Math.ceil(filtered.length / perPage));
 
-  // Toggle por label
   const toggleLabel = (label) =>
     setChecked((s) => ({ ...s, [label]: !s[label] }));
 
   const applyFilters = (e) => {
     e?.preventDefault?.();
     setPage(1);
+    // En móviles, cerrar el panel de filtros después de aplicar
+    if (window.innerWidth <= 780) {
+      setShowFilters(false);
+    }
   };
 
   return (
@@ -89,13 +88,20 @@ export default function CategoriesPage() {
       <div className="cat-container">
         {err && <div className="cat-alert">{err}</div>}
 
+        {/* Botón para mostrar filtros en móviles */}
+        <button 
+          className="mobile-filter-btn"
+          onClick={() => setShowFilters(!showFilters)}
+        >
+          {showFilters ? 'Hide Filters' : 'Show Filters'}
+        </button>
+
         <div className="cat-wrap">
-          {/* Sidebar */}
-          <aside className="cat-aside">
+          {/* Sidebar - Oculto en móviles por defecto */}
+          <aside className={`cat-aside ${showFilters ? 'show-filters' : ''}`}>
             <div className="cat-card">
               <h3 className="cat-title">Categories</h3>
 
-              {/* SIEMPRE mostramos las 5 del Figma */}
               <div className="cat-checks">
                 {FIGMA_MAP.map(({ label }) => (
                   <label key={label} className="cat-check">

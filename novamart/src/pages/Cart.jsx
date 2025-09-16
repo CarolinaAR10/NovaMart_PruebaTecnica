@@ -6,12 +6,11 @@ import "../styles/cart.css";
 
 const PLACEHOLDER = "https://placehold.co/120x120?text=No+Image";
 
-// 1) Helper robusto para encontrar la imagen
 function firstUrl(maybe) {
   if (!maybe) return null;
   if (Array.isArray(maybe)) return maybe[0] || null;
   if (typeof maybe === "string") {
-    // si viene como '["url", "url2"]'
+    // si viene como '["url", "url2"]' para que jale
     const s = maybe.trim();
     if (s.startsWith("[") && s.endsWith("]")) {
       try {
@@ -19,13 +18,12 @@ function firstUrl(maybe) {
         if (Array.isArray(arr) && arr[0]) return arr[0];
       } catch {}
     }
-    return s; // string normal con url
+    return s; // string normal con url, para que jale igual
   }
   return null;
 }
 
 function getProductImage(item) {
-  // intenta en varios lugares comunes
   return (
     firstUrl(item.image) ||
     firstUrl(item.images) ||

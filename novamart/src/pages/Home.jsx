@@ -48,13 +48,13 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Si tienes sección de categorías, colócala aquí */}
+        {/* Si tienes sección de categorías, se colocaria aquí */}
 
         <header className="home-head">
           <h1 className="home-title">Featured Products</h1>
         </header>
 
-        {/* GRID de productos */}
+        {/* GRID de productos, por que todo lleva orden */}
         {loading ? (
           <div className="home-grid">
             {Array.from({ length: perPage }).map((_, i) => (

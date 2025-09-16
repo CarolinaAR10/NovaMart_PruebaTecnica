@@ -1,0 +1,50 @@
+/* Grilla del buscador: columnas con ancho mínimo para que no se aplasten */
+.srch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* móvil */
+  gap: 16px;
+}
+
+/* Un poco más de respiración en tablets */
+@media (min-width: 640px) {
+  .srch-grid { gap: 20px; }
+}
+
+/* En md forzamos 3 columnas estables */
+@media (min-width: 768px) {
+  .srch-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+}
+
+/* En lg pasamos a 5 columnas */
+@media (min-width: 1024px) {
+  .srch-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+/* Skeletons coherentes con la grilla */
+.srch-skeleton {
+  height: 260px;
+  border-radius: 16px;
+  background: #e5e7eb;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: .6; }
+  50% { opacity: 1; }
+}
+
+/* Contenedor y título más compactos en móvil */
+.srch-container {
+  max-width: 1120px;      /* ~max-w-7xl */
+  margin: 0 auto;
+  padding: 24px 16px;     /* px-4 py-6 */
+}
+
+@media (min-width: 640px) {
+  .srch-container { padding: 40px 24px; } /* sm:px-6 py-10 aprox */
+}

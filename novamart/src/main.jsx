@@ -10,5 +10,4 @@ import "./styles/components.css";
 import "./styles/pagination.css";
 import "./styles/mobile-tabbar.css";
 
-
 ReactDOM.createRoot(document.getElementById("root")).render(<App />);

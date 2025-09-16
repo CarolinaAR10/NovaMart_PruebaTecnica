@@ -129,8 +129,6 @@ export default function Login() {
           </form>
         </section>
       </div>
-
-      <footer className="lgp__footer">© 2025 NovaMart. All rights reserved.</footer>
     </main>
   );
 }

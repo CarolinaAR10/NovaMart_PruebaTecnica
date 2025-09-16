@@ -6,19 +6,22 @@ import hero from "../assets/login.jpg";
 import "../styles/home.css";
 
 export default function Home() {
+  // estado para los productos
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
   const [page, setPage] = useState(1);
 
-  const perPage = 15;
+  const perPage = 15; // productos por página
 
+  // cargamos productos cuando se monta el componente
   useEffect(() => {
     let cancel = false;
     (async () => {
       try {
         setLoading(true);
         setErr("");
+        // pedimos hasta 60 productos
         const { items } = await listProducts({ offset: 0, limit: 60 });
         if (!cancel) setItems(items || []);
       } catch (e) {
@@ -27,9 +30,10 @@ export default function Home() {
         if (!cancel) setLoading(false);
       }
     })();
-    return () => { cancel = true; };
+    return () => { cancel = true; }; // cleanup si se desmonta
   }, []);
 
+  // calculamos qué productos mostrar en la página actual
   const start = (page - 1) * perPage;
   const pageItems = items.slice(start, start + perPage);
   const pages = Math.max(1, Math.ceil(items.length / perPage));
@@ -56,6 +60,7 @@ export default function Home() {
 
         {/* GRID de productos, por que todo lleva orden */}
         {loading ? (
+          // esqueletos mientras carga
           <div className="home-grid">
             {Array.from({ length: perPage }).map((_, i) => (
               <div key={i} className="home-skel">
@@ -67,6 +72,7 @@ export default function Home() {
           </div>
         ) : (
           <>
+            {/* grid de productos */}
             <div className="home-grid">
               {pageItems.map((p) => (
                 <div key={p.id} className="home-card">
@@ -75,6 +81,7 @@ export default function Home() {
               ))}
             </div>
 
+            {/* paginación al final */}
             <Pagination page={page} pages={pages} onChange={setPage} />
           </>
         )}

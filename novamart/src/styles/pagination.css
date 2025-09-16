@@ -1,10 +1,9 @@
-/* Estilos para la paginación */
 .nm-pg {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
-  margin: 40px 0 80px; /* Aumenté el margen inferior para móviles */
+  margin: 40px 0 80px;
   padding: 0 16px;
 }
 
@@ -45,10 +44,9 @@
   height: 16px;
 }
 
-/* Ajustes específicos para móviles */
 @media (max-width: 780px) {
   .nm-pg {
-    margin: 30px 0 60px; /* Margen inferior aún mayor para móviles */
+    margin: 30px 0 60px;
     padding: 0 12px;
     gap: 6px;
   }
@@ -62,19 +60,5 @@
   .nm-pg-ico {
     width: 14px;
     height: 14px;
-  }
-}
-
-/* Para dispositivos muy pequeños */
-@media (max-width: 360px) {
-  .nm-pg {
-    margin: 25px 0 90px;
-    gap: 4px;
-  }
-  
-  .nm-pg-arrow, .nm-pg-btn {
-    min-width: 32px;
-    height: 32px;
-    font-size: 12px;
   }
 }

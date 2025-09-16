@@ -1,7 +1,7 @@
 /* Grilla del buscador: columnas con ancho mínimo para que no se aplasten */
 .srch-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* móvil */
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 16px;
 }
 
@@ -40,11 +40,11 @@
 
 /* Contenedor y título más compactos en móvil */
 .srch-container {
-  max-width: 1120px;      /* ~max-w-7xl */
+  max-width: 1120px;      
   margin: 0 auto;
-  padding: 24px 16px;     /* px-4 py-6 */
+  padding: 24px 16px;     
 }
 
 @media (min-width: 640px) {
-  .srch-container { padding: 40px 24px; } /* sm:px-6 py-10 aprox */
+  .srch-container { padding: 40px 24px; } 
 }

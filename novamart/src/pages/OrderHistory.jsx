@@ -2,8 +2,10 @@
 import { useNavigate } from "react-router-dom";
 import "../styles/orders.css";
 
+// pestañas disponibles
 const TABS = ["All", "Processing", "Shipped", "Delivered", "Returns"];
 
+// lista simulada de pedidos
 const ORDERS = [
   { id: "ORD-1001", date: "2025-07-15", status: "Delivered", productName: "Aromatherapy Essential Oil", image: "https://i.imgur.com/1twoaDy.jpeg" },
   { id: "ORD-1002", date: "2025-07-15", status: "Delivered", productName: "Organic Turmeric Powder", image: "https://i.imgur.com/ZKGofuB.jpeg" },
@@ -13,15 +15,18 @@ const ORDERS = [
   { id: "ORD-1006", date: "2025-07-01", status: "Returns", productName: "Travel Skincare Set", image: "https://i.imgur.com/Ex5x3IU.jpg" },
 ];
 
+// formatea fecha en formato largo (ej: July 15, 2025)
 const fmtDateLong = (iso) =>
   new Date(iso).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 
+// utilidad para juntar clases condicionales
 const cx = (...cls) => cls.filter(Boolean).join(" ");
 
 export default function OrderHistory() {
   const navigate = useNavigate();
   const [tab, setTab] = useState("All");
 
+  // filtra órdenes según la pestaña seleccionada
   const list = useMemo(() => {
     if (tab === "All") return ORDERS;
     return ORDERS.filter((o) => o.status === tab);
@@ -45,12 +50,13 @@ export default function OrderHistory() {
           ))}
         </div>
 
-        {/* Lista */}
+        {/* Lista de órdenes */}
         <div className="oh-list">
           {list.map((o) => (
             <article key={o.id} className="oh-item">
               {/* cosas de la izquierda */}
               <div className="oh-left">
+                {/* texto según el estado */}
                 <p className="oh-kicker">
                   {o.status === "Delivered"
                     ? `Delivered on ${fmtDateLong(o.date)}`
@@ -63,6 +69,7 @@ export default function OrderHistory() {
                           : fmtDateLong(o.date)}
                 </p>
 
+                {/* link a detalles */}
                 <button
                   onClick={() => navigate("/track")}
                   className="oh-link"
@@ -79,6 +86,7 @@ export default function OrderHistory() {
 
                 <p className="oh-meta">Product Name</p>
 
+                {/* botón para trackear */}
                 <button
                   onClick={() => navigate("/track")}
                   className="oh-cta"
@@ -97,6 +105,7 @@ export default function OrderHistory() {
             </article>
           ))}
 
+          {/* mensaje si no hay órdenes */}
           {list.length === 0 && (
             <p className="oh-empty">No orders found for this filter.</p>
           )}

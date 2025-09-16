@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
           setUser(me);
         }
       } catch {
-        // token inválido → limpiar
+        // token inválido es igual a limpiar
         localStorage.removeItem("token");
         setUser(null);
       } finally {

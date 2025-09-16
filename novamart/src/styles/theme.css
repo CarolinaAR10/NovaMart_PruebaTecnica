@@ -33,3 +33,5 @@ button{ font: inherit; cursor: pointer; }
 .rounded-lg{ border-radius: var(--radius-lg); }
 .border{ border:1px solid var(--border); }
 .text-muted{ color: var(--muted); }
+
+/*Mas colorcitos*/

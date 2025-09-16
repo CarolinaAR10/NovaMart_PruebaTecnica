@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import "../styles/track.css";
 import paquete from "../assets/paquete.png";
 
-/* --------- Icons --------- */
+/* Icons */
 const Icon = {
   placed: (
     <svg className="to-ico" viewBox="0 0 24 24" fill="currentColor">
@@ -32,7 +32,7 @@ const Icon = {
   ),
 };
 
-/* --------- Timeline steps --------- */
+/* Timeline steps */
 const steps = [
   { key: "placed",     title: "Order Placed",     date: "July 15, 2024, 10:00 AM", dot: "to-dot--green",  text: "to-text--green",  icon: Icon.placed },
   { key: "processing", title: "Processing",       date: "July 15, 2024, 2:00 PM",  dot: "to-dot--gray",   text: "to-text--dark",   icon: Icon.processing },
@@ -41,7 +41,7 @@ const steps = [
   { key: "delivered",  title: "Delivered",        date: "July 17, 2024, 1:00 PM",  dot: "to-dot--gray",   text: "to-text--dark",   icon: Icon.delivered },
 ];
 
-/* --------- Mock order (puedes traerlo por id) --------- */
+/*Mock order (puedes traerlo por id) */
 const orderData = {
   id: 54321,
   purchaseDate: "July 15, 2024",
@@ -76,7 +76,6 @@ export default function TrackOrder() {
 
         {/* Grid */}
         <div className="to-grid">
-          {/* left: timeline + items */}
           <section>
             <ol className="to-timeline">
               {steps.map((s) => (
@@ -109,7 +108,6 @@ export default function TrackOrder() {
             </div>
           </section>
 
-          {/* right: card with image */}
           <aside className="to-card">
             <img src={ord.photo} alt="Proof of delivery" className="to-card-img" loading="lazy" />
             <div className="to-card-body">
@@ -121,3 +119,5 @@ export default function TrackOrder() {
     </main>
   );
 }
+
+// Tengo hambre :'c

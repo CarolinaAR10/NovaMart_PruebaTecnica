@@ -32,8 +32,7 @@
 
 /* Card & Form */
 .reg-card{
-  background:transparent;  /* en Figma no hay caja marcada; dejamos limpio */
-}
+  background:transparent;}
 .reg-form{
   margin:22px auto 0;
   max-width:500px;

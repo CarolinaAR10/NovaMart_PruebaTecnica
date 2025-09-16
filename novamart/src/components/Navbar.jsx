@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, NavLink, useNavigate, useLocation } from "react-router-dom"; // ⬅️ useLocation
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom"; 
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import logo from "../assets/logo.png";
 import carro from "../assets/carrito.png";
 import "../styles/nav.css";
 
+// Componente NavA: simplifica los links de navegación
 const NavA = ({ to, children }) => (
   <NavLink to={to} className={({ isActive }) => (isActive ? "active" : "")}>
     {children}
@@ -13,14 +14,18 @@ const NavA = ({ to, children }) => (
 );
 
 export default function Navbar() {
+  // obtenemos los items del carrito y contamos la cantidad total
   const { items } = useCart() || { items: [] };
   const count = items.reduce((s, i) => s + (i.qty || 1), 0);
 
+  // usuario actual y función logout desde el contexto de auth
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();                    // ⬅️ ruta actual
-  const hideUI = ["/login", "/register"].includes(location.pathname); // ⬅️ ocultar en auth
+  const location = useLocation(); 
+  // oculta el header en login/register
+  const hideUI = ["/login", "/register"].includes(location.pathname);
 
+  // estado de búsqueda
   const [query, setQuery] = useState("");
   const onSubmit = (e) => {
     e.preventDefault();
@@ -28,9 +33,11 @@ export default function Navbar() {
     if (q) navigate(`/search?q=${encodeURIComponent(q)}`);
   };
 
-  // dropdown
+  // estado del menú desplegable (perfil)
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
+
+  // cierra el menú si haces clic fuera
   useEffect(() => {
     const onClick = (e) => !ref.current?.contains(e.target) && setOpen(false);
     window.addEventListener("click", onClick);
@@ -40,13 +47,14 @@ export default function Navbar() {
   return (
     <header className="nm-header">
       <div className="nm-container nm-nav">
-        {/* IZQUIERDA: logo + links */}
+        {/* lado izquierdo: logo y links */}
         <div className="nm-left">
           <Link to="/" className="nm-brand">
             <img src={logo} alt="NovaMart" className="nm-logo" />
             <span className="nm-brand-text">NovaMart</span>
           </Link>
 
+          {/* links principales (se esconden en login/register) */}
           {!hideUI && (
             <nav className="nm-links">
               <NavA to="/">Products</NavA>
@@ -57,11 +65,12 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* CENTRO: buscador */}
+        {/* buscador en el centro */}
         {!hideUI && (
           <form onSubmit={onSubmit} className="nm-center">
             <div className="nm-search">
               <span className="nm-search-ico" aria-hidden>
+                {/* ícono de lupa */}
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                   <path
                     strokeLinecap="round"
@@ -81,9 +90,10 @@ export default function Navbar() {
           </form>
         )}
 
-        {/* DERECHA: favoritos, carrito, user o auth CTAs */}
+        {/* lado derecho: favoritos, carrito y usuario */}
         {!hideUI && (
           <div className="nm-right">
+            {/* botón de favoritos (solo si hay usuario) */}
             {user && (
               <button type="button" className="nm-icon-btn" aria-label="Favorites">
                 <svg viewBox="0 0 24 24" className="nm-icon" fill="currentColor">
@@ -92,6 +102,7 @@ export default function Navbar() {
               </button>
             )}
 
+            {/* carrito con badge de cantidad */}
             <Link to="/cart" className="nm-cart">
               <span className="nm-icon-btn">
                 <img src={carro} alt="Cart" className="nm-cart-ico" />
@@ -99,6 +110,7 @@ export default function Navbar() {
               {count > 0 && <span className="nm-badge">{count}</span>}
             </Link>
 
+            {/* si hay usuario: avatar con menú */}
             {user ? (
               <div className="nm-user" ref={ref}>
                 <button
@@ -111,11 +123,13 @@ export default function Navbar() {
                     alt={user.name || "User"}
                     className="nm-avatar"
                   />
+                  {/* flechita para desplegar */}
                   <svg className="nm-chev" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M5.23 7.21a.75.75 0 011.06.02L10 11.11l3.71-3.88a.75.75 0 111.08 1.04l-4.25 4.45a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" />
                   </svg>
                 </button>
 
+                {/* menú del usuario */}
                 {open && (
                   <div className="nm-menu">
                     <NavLink
@@ -129,8 +143,8 @@ export default function Navbar() {
                       className="nm-menu-item nm-menu-danger"
                       onClick={() => {
                         setOpen(false);
-                        logout();
-                        navigate("/");
+                        logout(); // cerrar sesión
+                        navigate("/"); // volver al inicio
                       }}
                     >
                       Logout
@@ -139,6 +153,7 @@ export default function Navbar() {
                 )}
               </div>
             ) : (
+              // si no hay usuario: botones de login y registro
               <>
                 <Link to="/register" className="nm-cta nm-cta-primary">
                   Sign Up

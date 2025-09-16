@@ -7,22 +7,22 @@
   --blue:#2E6FF2;
 }
 
-/* ===== Page ===== */
+/*  Page  */
 .detail{ min-height:100vh; background:var(--bg); }
 .detail-container{ max-width:1120px; margin:0 auto; padding:24px 16px 32px; }
 
-/* ===== Skeleton & alert ===== */
+/*  Skeleton & alert  */
 .skeleton{ height:320px; border-radius:16px; background:#e5e7eb; }
 .alert{ padding:12px 14px; border-radius:10px; }
 .alert--error{ background:#fef2f2; color:#b91c1c; border:1px solid #fecaca; }
 
-/* ===== Top Layout ===== */
+/*  Top Layout  */
 .detail-top{ display:grid; gap:24px; grid-template-columns: 1fr; }
 @media (min-width:1024px){
   .detail-top{ gap:40px; grid-template-columns: minmax(0,620px) 1fr; }
 }
 
-/* ===== Media ===== */
+/*  Media  */
 .detail-mediaCard{
   background:var(--card);
   border:1px solid #f3f4f6;
@@ -40,7 +40,7 @@
 .detail-captionTitle{ font-weight:700; font-size:18px; color:var(--text); margin:0 0 6px; }
 .detail-captionText{ color:#374151; }
 
-/* ===== Info ===== */
+/*  Info  */
 .detail-info{ padding-top:4px; }
 .detail-title{
   font-weight:800; color:var(--text); line-height:1.2;
@@ -53,7 +53,7 @@
 
 .detail-price{ margin-top:16px; font-weight:800; font-size:28px; color:var(--text); }
 
-/* Qty + CTA */
+/* Qty + CTA,  Qty → es abreviación de Quantity (cantidad). y CTA → significa Call To Action, o sea el botón principal de acción que quieres que el usuario haga*/
 .detail-buyRow{ margin-top:16px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
 .select{ position:relative; width:256px; max-width:100%; }
 .select-input{
@@ -87,7 +87,7 @@
 .bars-track{ position:relative; height:8px; flex:1; background:#e5e7eb; border-radius:999px; overflow:hidden; }
 .bars-fill{ position:absolute; left:0; top:0; height:8px; background:var(--blue); }
 
-/* ===== Related ===== */
+/*  Related  */
 .detail-related{ margin-top:48px; }
 .detail-relatedTitle{ margin:0 0 12px; font-size:20px; font-weight:700; color:var(--text); }
 .related-grid{

@@ -11,24 +11,25 @@
   --danger-700:#b91c1c;
 }
 
-/* Page shell */
+/* Página principal del carrito, puro estilo aqui, jajajaja */
 .cart-page{ min-height:100vh; background:var(--cart-bg); }
 .cart-wrap{ width:100%; max-width:720px; margin:0 auto; padding:56px 20px 48px; }
 
-/* Title */
+/* Título */
 .cart-title{ font-size:32px; line-height:1.1; font-weight:800; color:var(--txt); }
 
-/* Empty state */
+/* Estado vacío */
 .cart-empty{ margin-top:24px; background:var(--card); border:1px solid #eef1f6; border-radius:16px; padding:18px 20px; color:#374151; }
 .cart-link{ margin-left:6px; color:var(--blue); text-decoration:none; }
 .cart-link:hover{ text-decoration:underline; }
 
-/* Items */
+/* Lista de productos */
 .cart-list{ margin-top:26px; display:grid; gap:26px; }
 .cart-item{ display:flex; align-items:center; justify-content:space-between; }
 
 .cart-left{ display:flex; align-items:center; gap:14px; min-width:0; }
 
+/* Imagen del producto */
 .cart-thumb{
   width:72px; height:72px;
   border-radius:12px;
@@ -45,14 +46,14 @@
 }
 .cart-qty{ font-size:13px; color:var(--blue); margin-top:4px; }
 
-/* right column: price + remove */
+/* Columna derecha: precio + eliminar */
 .cart-right{
   display:flex; flex-direction:column; align-items:flex-end; gap:8px;
   min-width:120px;
 }
 .cart-price{ color:#1f2937; font-weight:600; }
 
-/* remove button */
+/* Botón eliminar */
 .cart-remove{
   border:1px solid #f3d1d1;
   background:#fff;
@@ -70,7 +71,7 @@
 }
 .cart-remove:active{ transform:translateY(.5px); }
 
-/* Summary */
+/* Resumen de compra */
 .cart-summary{ margin-top:44px; }
 .cart-h2{ font-size:18px; font-weight:700; color:var(--txt); }
 .cart-rows{ margin-top:16px; display:grid; gap:18px; }
@@ -83,7 +84,7 @@
 .cart-row-value{ color:#1f2937; }
 .cart-row-value--strong{ color:#0f172a; font-weight:700; }
 
-/* CTA */
+/* Botón CTA (finalizar compra) */
 .cart-btn{
   margin-top:26px; width:100%; height:48px; border:none; border-radius:12px;
   background:var(--blue); color:#fff; font-weight:700; font-size:15px;
@@ -93,7 +94,7 @@
 .cart-btn:hover{ filter:brightness(.97); }
 .cart-btn:active{ transform:translateY(.5px); }
 
-/* Continue link */
+/* Link continuar comprando */
 .cart-continue-wrap{ margin-top:10px; text-align:center; }
 .cart-continue{ display:inline-flex; align-items:center; gap:6px; color:#6b7280; text-decoration:none; font-size:14px; }
 .cart-continue:hover{ color:#111827; }

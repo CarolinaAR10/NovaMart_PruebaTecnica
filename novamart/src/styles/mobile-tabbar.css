@@ -1,6 +1,3 @@
-/* -------- Mobile bottom bar (visible solo en móvil) -------- */
-
-/* Barra inferior solo móvil */
 /* Barra inferior solo móvil */
 .mtb-bar {
   position: fixed;
@@ -8,8 +5,8 @@
   right: 0;
   bottom: 0;
   z-index: 40;
-  display: flex; /* en vez de grid */
-  justify-content: space-around; /* reparte uniforme */
+  display: flex;
+  justify-content: space-around;
   background: #fff;
   border-top: 1px solid #eef2f7;
   padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
@@ -19,7 +16,7 @@
 .mtb-tab,
 .mb-item,
 .mb-profile {
-  flex: 1; /* todos mismo espacio */
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,7 +30,7 @@
 .mtb-menu{
   position: fixed;
   left: 50%;
-  bottom: calc(56px + env(safe-area-inset-bottom)); /* justo arriba de la barra */
+  bottom: calc(56px + env(safe-area-inset-bottom));
   transform: translateX(-50%);
   background:#fff; border:1px solid #e5e7eb; border-radius:14px;
   box-shadow: 0 12px 28px rgba(16,24,40,.16);

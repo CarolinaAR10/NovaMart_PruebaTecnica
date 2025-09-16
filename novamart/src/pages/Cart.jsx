@@ -23,6 +23,8 @@ function firstUrl(maybe) {
   return null;
 }
 
+// función que intenta sacar la mejor imagen del producto, 
+// probando varias propiedades y usando un placeholder si no hay
 function getProductImage(item) {
   return (
     firstUrl(item.image) ||
@@ -38,12 +40,14 @@ export default function Cart() {
   const navigate = useNavigate();
   const { items, subtotal, shipping, total, removeItem, remove } = useCart();
 
+  // función para eliminar un producto (según cómo esté implementado el contexto)
   const onRemove = (id) => {
     if (typeof removeItem === "function") return removeItem(id);
     if (typeof remove === "function") return remove(id);
     console.warn("Implementa removeItem(id) en CartContext");
   };
 
+  // si no hay productos en el carrito, mostramos mensaje de vacío
   if (!items.length) {
     return (
       <main className="cart-page">
@@ -65,12 +69,14 @@ export default function Cart() {
       <div className="cart-wrap">
         <h1 className="cart-title">Shopping Cart</h1>
 
+        {/* lista de productos en el carrito */}
         <section className="cart-list">
           {items.map((i) => {
             const src = getProductImage(i);
             return (
               <article key={i.id} className="cart-item">
                 <div className="cart-left">
+                  {/* miniatura del producto con fallback */}
                   <img
                     src={src}
                     alt={i.title}
@@ -85,7 +91,9 @@ export default function Cart() {
                 </div>
 
                 <div className="cart-right">
+                  {/* precio total de ese producto */}
                   <div className="cart-price">{money(i.price * i.qty)}</div>
+                  {/* botón para eliminar producto */}
                   <button
                     type="button"
                     className="cart-remove"
@@ -100,6 +108,7 @@ export default function Cart() {
           })}
         </section>
 
+        {/* resumen del pedido con totales */}
         <section className="cart-summary">
           <h2 className="cart-h2">Order Summary</h2>
           <div className="cart-rows">
@@ -109,10 +118,12 @@ export default function Cart() {
             <Row label="Total" value={money(total)} strong topBorder />
           </div>
 
+          {/* botón para finalizar compra */}
           <button className="cart-btn" onClick={() => navigate("/track")}>
             Finalize Purchase
           </button>
 
+          {/* enlace para seguir comprando */}
           <div className="cart-continue-wrap">
             <Link to="/" className="cart-continue">
               Continue Shopping
@@ -131,6 +142,7 @@ export default function Cart() {
   );
 }
 
+// componente para mostrar filas en el resumen (subtotal, envío, total)
 function Row({ label, value, strong = false, topBorder = false }) {
   return (
     <div className={"cart-row" + (topBorder ? " cart-row--border" : "")}>

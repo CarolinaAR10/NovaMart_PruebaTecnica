@@ -44,10 +44,10 @@
 }
 
 @media (min-width: 640px){
-  .to-timeline{ padding-left: 80px; } /* un pelín más en pantallas medianas+ */
+  .to-timeline{ padding-left: 80px; }
 }
 
-/* el dot se queda donde está, no hace falta moverlo */
+/* el dot se queda donde está, no hace falta moverlo, leyeron?, no lo muevan */
 .to-dot{
   position: absolute;
   left: -55px; top: 2px;

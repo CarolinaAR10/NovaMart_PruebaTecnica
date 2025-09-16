@@ -7,39 +7,43 @@ import "../styles/register.css"; // ⬅️ estilos separados
 export default function Register() {
   const navigate = useNavigate();
 
+  // estado del formulario
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
-    avatar: "https://i.pravatar.cc/150",
+    avatar: "https://i.pravatar.cc/150", // avatar por defecto
   });
+  // control de carga y error
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
 
+  // envía el formulario al backend
   const submit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // evita recarga de página
     try {
       setErr("");
       setLoading(true);
-      await api.post("/users", form);
+      await api.post("/users", form); // crea el usuario
       navigate("/login"); // redirige a Sign in
     } catch (e) {
+      // muestra mensaje de error del backend o uno genérico
       setErr(e?.response?.data?.message || e.message || "Error al registrar");
     } finally {
-      setLoading(false);
+      setLoading(false); // quita el estado de carga
     }
   };
 
   return (
     <main className="reg-page">
       <div className="reg-wrap">
-        {/* Encabezado como en Figma */}
+        {/* Encabezado como en el figma que hiceeee */}
         <header className="reg-head">
           <h1 className="reg-title">Create Your Account</h1>
           <p className="reg-subtitle">Join NovaMart and start shopping today!</p>
         </header>
 
-        {/* Card / Form */}
+        {/* Card*/}
         <section className="reg-card">
           <form onSubmit={submit} className="reg-form">
             {/* Name */}
@@ -51,7 +55,7 @@ export default function Register() {
                   type="text"
                   placeholder="Your  Name"
                   value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })} // actualiza estado
                   className="reg-input__control"
                   autoComplete="name"
                 />
@@ -67,7 +71,7 @@ export default function Register() {
                   type="email"
                   placeholder="Your  Email"
                   value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })} // actualiza estado
                   className="reg-input__control"
                   autoComplete="email"
                 />
@@ -83,15 +87,17 @@ export default function Register() {
                   type="password"
                   placeholder="Your  Password"
                   value={form.password}
-                  onChange={(e) => setForm({ ...form, password: e.target.value })}
+                  onChange={(e) => setForm({ ...form, password: e.target.value })} // actualiza estado
                   className="reg-input__control"
                   autoComplete="new-password"
                 />
               </div>
             </div>
 
+            {/* mensaje de error si algo falla */}
             {err && <div className="reg-error">{err}</div>}
 
+            {/* botón de enviar: cambia texto si está cargando */}
             <button
               type="submit"
               disabled={loading}
@@ -100,6 +106,7 @@ export default function Register() {
               {loading ? "Creating…" : "Create Account"}
             </button>
 
+            {/* link para ir a iniciar sesión si ya tiene cuenta */}
             <p className="reg-small">
               Already have an account?{" "}
               <Link to="/login" className="reg-link">Sign in</Link>

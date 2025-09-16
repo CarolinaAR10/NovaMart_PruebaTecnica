@@ -5,12 +5,16 @@ import Pagination from "../components/Pagination";
 import "../styles/categories.css";
 
 export default function CategoriesPage() {
+  // estado para guardar los productos sin filtrar
   const [raw, setRaw] = useState([]);
+  // estado con las categorías que vienen de la API
   const [cats, setCats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
+  // estado para mostrar/ocultar filtros en móvil
   const [showFilters, setShowFilters] = useState(false);
 
+  // mapa que relaciona etiquetas con ids de categorías (simulación tipo figma)
   const FIGMA_MAP = [
     { label: "Electronics",       ids: [2] },
     { label: "Clothing",          ids: [4, 43] },
@@ -19,11 +23,15 @@ export default function CategoriesPage() {
     { label: "Sports & Outdoors", ids: [84, 4] },
   ];
 
+  // estado de checkboxes (categorías seleccionadas)
   const [checked, setChecked] = useState({});
+  // estado del rango de precios
   const [price, setPrice] = useState({ min: 0, max: 999 });
+  // estado de la paginación
   const [page, setPage] = useState(1);
-  const perPage = 15;
+  const perPage = 15; // productos por página
 
+  // cargamos productos y categorías al montar el componente
   useEffect(() => {
     let cancel = false;
     (async () => {
@@ -31,7 +39,7 @@ export default function CategoriesPage() {
         setLoading(true);
         setErr("");
         const [{ items }, categories] = await Promise.all([
-          listProducts({ offset: 0, limit: 100 }),
+          listProducts({ offset: 0, limit: 100 }), // pedimos hasta 100 productos
           listCategories(),
         ]);
         if (!cancel) {
@@ -45,10 +53,11 @@ export default function CategoriesPage() {
       }
     })();
     return () => {
-      cancel = true;
+      cancel = true; // cleanup para evitar actualizar estado desmontado
     };
   }, []);
 
+  // aplicamos filtros en memoria (categorías y precios)
   const filtered = useMemo(() => {
     const selectedLabels = Object.keys(checked).filter((k) => checked[k]);
     const selectedIds = new Set(
@@ -67,13 +76,16 @@ export default function CategoriesPage() {
     });
   }, [raw, checked, price]);
 
+  // productos a mostrar en la página actual
   const start = (page - 1) * perPage;
   const pageItems = filtered.slice(start, start + perPage);
   const pages = Math.max(1, Math.ceil(filtered.length / perPage));
 
+  // alterna un checkbox de categoría
   const toggleLabel = (label) =>
     setChecked((s) => ({ ...s, [label]: !s[label] }));
 
+  // aplica filtros y reinicia a página 1
   const applyFilters = (e) => {
     e?.preventDefault?.();
     setPage(1);
@@ -101,6 +113,7 @@ export default function CategoriesPage() {
             <div className="cat-card">
               <h3 className="cat-title">Categories</h3>
 
+              {/* checkboxes de categorías */}
               <div className="cat-checks">
                 {FIGMA_MAP.map(({ label }) => (
                   <label key={label} className="cat-check">
@@ -114,6 +127,7 @@ export default function CategoriesPage() {
                 ))}
               </div>
 
+              {/* rango de precios */}
               <div className="cat-price">
                 <h4 className="cat-subtitle">Price Range</h4>
                 <div className="cat-range">
@@ -156,11 +170,12 @@ export default function CategoriesPage() {
             </div>
           </aside>
 
-          {/* Listado */}
+          {/* Listado de productos */}
           <section className="cat-content">
             <h2 className="cat-h2">Products by category</h2>
 
             {loading ? (
+              // esqueletos mientras carga
               <div className="cat-grid">
                 {Array.from({ length: perPage }).map((_, i) => (
                   <div key={i} className="cat-skel" />
@@ -168,6 +183,7 @@ export default function CategoriesPage() {
               </div>
             ) : (
               <>
+                {/* grid de productos */}
                 <div className="cat-grid">
                   {pageItems.map((p) => (
                     <div key={p.id} className="cat-item">
@@ -175,6 +191,7 @@ export default function CategoriesPage() {
                     </div>
                   ))}
                 </div>
+                {/* paginación */}
                 <Pagination page={page} pages={pages} onChange={setPage} />
               </>
             )}

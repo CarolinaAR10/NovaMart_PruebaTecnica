@@ -7,23 +7,24 @@ import ProductCard from "../components/ProductCard";
 import "../styles/detail.css";
 
 export default function ProductDetail() {
-  const { id } = useParams();
-  const [product, setProduct] = useState(null);
-  const [related, setRelated] = useState([]);
-  const [qty, setQty] = useState(1);
-  const [err, setErr] = useState("");
-  const { add } = useCart();
+  const { id } = useParams();                  // id que viene de la URL
+  const [product, setProduct] = useState(null); // producto actual
+  const [related, setRelated] = useState([]);   // productos relacionados
+  const [qty, setQty] = useState(1);            // cantidad seleccionada
+  const [err, setErr] = useState("");           // mensaje de error (si algo falla)
+  const { add } = useCart();                    // función para agregar al carrito
 
   // Calificaciones estáticas
   const rating = { avg: 4.5, total: 120, dist: { 5: 40, 4: 30, 3: 15, 2: 10, 1: 5 } };
 
+  // carga los datos del producto y los relacionados cuando cambia el id
   useEffect(() => {
     let cancel = false;
     (async () => {
       try {
         setErr("");
-        const p = await getProductById(id);
-        const rel = (await relatedById?.(id)) ?? [];
+        const p = await getProductById(id);          // pide el producto por id
+        const rel = (await relatedById?.(id)) ?? []; // pide relacionados (si existe la función)
         if (!cancel) {
           setProduct(p);
           setRelated(rel || []);
@@ -33,13 +34,16 @@ export default function ProductDetail() {
       }
     })();
     return () => {
-      cancel = true;
+      cancel = true; // evita actualizar estado si el componente ya no está montado
     };
   }, [id]);
 
+  // saca la mejor imagen disponible del producto
   const img = useMemo(() => (product ? pickImage(product) : ""), [product]);
+  // nombre de la categoría (fallback si no viene)
   const categoryName = product?.category?.name || "Uncategorized";
 
+  // vista de error
   if (err) {
     return (
       <main className="detail">
@@ -50,6 +54,7 @@ export default function ProductDetail() {
     );
   }
 
+  // esqueleto/cargando mientras no hay producto
   if (!product) {
     return (
       <main className="detail">
@@ -73,6 +78,7 @@ export default function ProductDetail() {
                 alt={product.title}
                 className="detail-mediaImg"
                 onError={(e) => {
+                  // si falla la imagen, muestra un placeholder grande
                   e.currentTarget.src = "https://placehold.co/1200x1200?text=No+image";
                 }}
               />
@@ -81,8 +87,10 @@ export default function ProductDetail() {
 
           {/* Info panel */}
           <div className="detail-info">
+            {/* título del producto */}
             <h1 className="detail-title">{product.title}</h1>
 
+            {/* descripción (si no hay, mete un texto de relleno corto) */}
             <p className="detail-description">
               {product.description ||
                 "A sleek and efficient item for your daily needs. Combines modern design with practical functionality, making it a perfect addition to any setup."}
@@ -93,6 +101,7 @@ export default function ProductDetail() {
 
             {/* Qty + Add to cart */}
             <div className="detail-buyRow">
+              {/* selector de cantidad (1 a 10) */}
               <div className="select">
                 <select
                   value={qty}
@@ -110,6 +119,7 @@ export default function ProductDetail() {
                 </span>
               </div>
 
+              {/* botón para agregar al carrito con la cantidad seleccionada */}
               <button
                 onClick={() =>
                   add({ id: product.id, title: product.title, price: product.price, qty })
@@ -127,6 +137,7 @@ export default function ProductDetail() {
 
             {/* Ratings */}
             <div className="detail-ratings">
+              {/* bloque con promedio + estrellas + total de reviews */}
               <div className="detail-scoreBlock">
                 <div className="detail-score">{rating.avg}</div>
                 <div className="detail-stars">
@@ -138,6 +149,7 @@ export default function ProductDetail() {
                 <p className="detail-reviews">{rating.total} reviews</p>
               </div>
 
+              {/* barras por cada estrella (5 a 1) */}
               <div className="detail-bars">
                 {[5, 4, 3, 2, 1].map((n) => (
                   <div key={n} className="bars-row">
@@ -145,7 +157,7 @@ export default function ProductDetail() {
                     <div className="bars-track">
                       <div
                         className="bars-fill"
-                        style={{ width: `${rating.dist[n]}%` }}
+                        style={{ width: `${rating.dist[n]}%` }} // ancho según porcentaje
                       />
                     </div>
                     <span className="bars-perc">{rating.dist[n]}%</span>

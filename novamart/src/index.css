@@ -1,9 +1,9 @@
-﻿/* ====== Navbar (estilo Figma) ====== */
+﻿/* Navbar */
 :root{
   --primary:#2E6FF2;
   --bg:#F7FAFC;
   --panel:#ffffff;
-  --soft:#EFF4FA;      /* gris azulado suave de chips */
+  --soft:#EFF4FA;  
   --text:#111827;
   --muted:#6B7280;
   --orange:#F97316;
@@ -57,8 +57,8 @@
 .search{
   position: relative;
   width: 100%;
-  max-width: 520px;       /* se ve largo como en Figma */
-  margin-left: auto;      /* empuja hacia la izquierda del bloque de acciones */
+  max-width: 520px;    
+  margin-left: auto;     
   margin-right: 8px;
 }
 .search__icon{
@@ -72,7 +72,7 @@
   border: 1px solid transparent;
   background: var(--soft);
   border-radius: 12px;
-  padding: 0 14px 0 40px;   /* espacio para icono */
+  padding: 0 14px 0 40px;  
   font-size: 14px;
   color: var(--text);
   outline: none;
@@ -123,7 +123,7 @@
   font-weight: 700;
 }
 
-/* contenedor del usuario (chip claro detrás flecha y avatar, como en figma) */
+/* contenedor del usuario */
 .user-chip{
   display:flex; align-items:center; gap:10px;
   background: var(--soft);

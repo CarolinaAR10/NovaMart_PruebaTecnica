@@ -42,7 +42,7 @@ export default function Login() {
           </div>
         </section>
 
-        {/* Card / Form */}
+        {/* Card*/}
         <section className="lgp__card">
           <form className="lgp__form" onSubmit={submit}>
             {/* Email */}
@@ -60,7 +60,6 @@ export default function Login() {
                 required
               />
               <span className="lgp__righticon" aria-hidden>
-                {/* mail icon */}
                 <svg viewBox="0 0 24 24" width="18" height="18">
                   <path
                     fill="currentColor"

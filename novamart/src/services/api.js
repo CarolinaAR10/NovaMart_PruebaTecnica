@@ -7,7 +7,7 @@ const api = axios.create({
   timeout: 10000,
 });
 
-// Inyecta token si existe
+// Inyecta token si existe, si no nadota
 api.interceptors.request.use((cfg) => {
   const token = localStorage.getItem("token");
   if (token) cfg.headers.Authorization = `Bearer ${token}`;

@@ -18,8 +18,7 @@
 }
 .dp-icon-btn svg,.dp-icon-chip svg{ width:20px; height:20px; }
 
-/* ------- CONTENEDOR RESPONSIVO ------- */
-/* En móvil apila (1 columna). En ≥1024px usa 2 columnas: imagen fija + panel flexible */
+/* ------- CONTENEDOR RESPONSIVO :v ------- */
 .dp-wrap{
   display:grid; grid-template-columns: 1fr; gap:16px; padding:0 16px;
   max-width:1200px; margin:0 auto;
@@ -95,7 +94,7 @@
   .dp-body{ padding-top:12px; }
 }
 
-/* hace que una sección dentro de .dp-wrap ocupe TODAS las columnas */
+/* hace que una sección dentro de .dp-wrap ocupe toditas las columnas */
 .dp-span-all{ grid-column: 1 / -1; }
 
 /* grilla de cards para los relacionados */

@@ -8,7 +8,7 @@
 /* ALERT */
 .home-alert{ margin-bottom:12px; border:1px solid #fecaca; background:#fff5f5; color:#b91c1c; border-radius:10px; padding:10px 12px; }
 
-/* HERO (debajo del buscador) */
+/* HERO (debajo del buscador) El hero es básicamente la primera impresión que recibe el usuario cuando entra a tu Home. */
 .home-hero{ position:relative; overflow:hidden; border-radius:16px; margin-bottom:16px; }
 .home-hero img{ width:100%; display:block; aspect-ratio: 16/9; object-fit:cover; }
 .home-hero-copy{
@@ -23,10 +23,10 @@
 /* GRID – 2 columnas en móvil */
 .home-grid{
   display:grid; gap:12px;
-  grid-template-columns: repeat(2, 1fr);     /* 👈 2 columnas móviles */
+  grid-template-columns: repeat(2, 1fr);
 }
 
-/* En tablets/desktop crecemos a 3-4 columnas */
+/* En tablets/desktop crecemos a 3-4 columnas, este si chat lo puso*/
 @media (min-width: 640px){
   .home-title{ font-size:22px; }
   .home-grid{ gap:16px; grid-template-columns: repeat(3, 1fr); }

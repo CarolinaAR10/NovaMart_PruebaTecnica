@@ -77,14 +77,6 @@ export default function ProductDetail() {
                 }}
               />
             </div>
-
-            {/* Caption bajo la imagen (opcional) */}
-            <div className="detail-caption">
-              <h3 className="detail-captionTitle">{product.title}</h3>
-              <p className="detail-captionText">
-                {product.description || "A sleek and efficient product for your daily needs."}
-              </p>
-            </div>
           </div>
 
           {/* Info panel */}

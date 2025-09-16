@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { listProducts } from "../services/products";
 import ProductCard from "../components/ProductCard";
 import Pagination from "../components/Pagination";
-import hero from "../assets/login.jpg";            // usa tu banner preferido
+import hero from "../assets/login.jpg";
 import "../styles/home.css";
 
 export default function Home() {

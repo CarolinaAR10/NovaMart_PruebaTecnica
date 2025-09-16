@@ -1,66 +1,134 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { useAuth } from "../context/AuthContext"; // si no lo tienes, cambia logout por un prop
+// src/components/MobileTabbar.jsx
+import React, { useEffect, useRef, useState } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import "../styles/mobile-tabbar.css";
 
-export default function MobileTabBar() {
-  const { user, logout } = useAuth?.() || { user: null, logout: () => {} };
+export default function MobileTabbar() {
+  const { user, logout } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const [open, setOpen] = useState(false);
-  const ref = useRef(null);
+  const menuRef = useRef(null);
 
   useEffect(() => {
-    const onClick = (e) => {
-      if (!ref.current?.contains(e.target)) setOpen(false);
-    };
-    document.addEventListener("click", onClick);
-    return () => document.removeEventListener("click", onClick);
-  }, []);
+    function handleClickOutside(e) {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    }
+    if (open) document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [open]);
 
   return (
-    <nav className="mb-bar md-hidden" aria-label="Primary mobile">
-      <NavLink to="/" className="mb-item">
-        <span className="mb-ico" aria-hidden>
-          {/* home */}
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 10.5l9-7 9 7V20a2 2 0 01-2 2h-4a1 1 0 01-1-1v-5H10v5a1 1 0 01-1 1H5a2 2 0 01-2-2v-9.5z"/></svg>
-        </span>
+    <nav className="mtb-bar">
+      {/* Home */}
+      <NavLink to="/" end className="mb-item">
+        <div className="mb-ico">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M3 9.75L12 3l9 6.75V21a.75.75 0 01-.75.75H3.75A.75.75 0 013 21V9.75z" />
+          </svg>
+        </div>
         <span className="mb-txt">Home</span>
       </NavLink>
 
+      {/* Categories */}
       <NavLink to="/categories" className="mb-item">
-        <span className="mb-ico" aria-hidden>
-          {/* categories */}
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 5h6v6H4V5zm10 0h6v6h-6V5zM4 13h6v6H4v-6zm10 0h6v6h-6v-6z"/></svg>
-        </span>
+        <div className="mb-ico">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </div>
         <span className="mb-txt">Categories</span>
       </NavLink>
 
+      {/* Cart */}
       <NavLink to="/cart" className="mb-item">
-        <span className="mb-ico" aria-hidden>
-          {/* cart */}
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 18a2 2 0 104 0 2 2 0 00-4 0zm8 0a2 2 0 104 0 2 2 0 00-4 0zM6.2 6l.4 2h10.9a1 1 0 01.98 1.2l-1.1 5.5a2 2 0 01-1.96 1.6H9.1a2 2 0 01-1.96-1.6L5.1 5H3a1 1 0 110-2h3.3a1 1 0 01.98.8L7 6h-.8z"/></svg>
-        </span>
+        <div className="mb-ico">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M2.25 2.25h2.25l1.5 12h12l1.5-9H6" />
+            <circle cx="9" cy="20" r="1.5" />
+            <circle cx="18" cy="20" r="1.5" />
+          </svg>
+        </div>
         <span className="mb-txt">Cart</span>
       </NavLink>
 
-      <div className="mb-item mb-profile" ref={ref}>
-        <button className="mb-profile-btn" onClick={() => setOpen(v => !v)} aria-haspopup="menu" aria-expanded={open}>
-          <span className="mb-ico" aria-hidden>
-            {/* user */}
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a5 5 0 100-10 5 5 0 000 10zm-7 9a7 7 0 0114 0v1H5v-1z"/></svg>
-          </span>
+      {/* Profile */}
+      <div className="mb-profile" ref={menuRef}>
+        <button
+          type="button"
+          className="mb-profile-btn"
+          onClick={() => setOpen((v) => !v)}
+        >
+          <div className="mb-ico">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M12 12c2.5 0 4.5-2 4.5-4.5S14.5 3 12 3 7.5 5 7.5 7.5 9.5 12 12 12zm0 1.5c-3 0-9 1.5-9 4.5V21h18v-3c0-3-6-4.5-9-4.5z" />
+            </svg>
+          </div>
           <span className="mb-txt">Profile</span>
         </button>
 
         {open && (
-          <div className="mb-menu" role="menu">
-            <span className="mb-menu-item" role="menuitem">Profile (vacío)</span>
-            <Link to="/orders" className="mb-menu-item" role="menuitem">Order History</Link>
-            <button
-              className="mb-menu-item mb-menu-danger"
-              onClick={() => { setOpen(false); logout?.(); }}
-              role="menuitem"
-            >
-              Logout
-            </button>
+          <div className="mtb-menu">
+            {user ? (
+              <>
+                <button
+                  className="mtb-menu-item"
+                  onClick={() => {
+                    setOpen(false);
+                    navigate("/profile");
+                  }}
+                >
+                  Profile
+                </button>
+                <button
+                  className="mtb-menu-item"
+                  onClick={() => {
+                    setOpen(false);
+                    navigate("/orders");
+                  }}
+                >
+                  Order History
+                </button>
+                <button
+                  className="mtb-menu-item mtb-danger"
+                  onClick={async () => {
+                    setOpen(false);
+                    try {
+                      await logout?.();
+                    } finally {
+                      navigate("/");
+                    }
+                  }}
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  className="mtb-menu-item"
+                  onClick={() => {
+                    setOpen(false);
+                    navigate("/login");
+                  }}
+                >
+                  Login
+                </button>
+                <button
+                  className="mtb-menu-item"
+                  onClick={() => {
+                    setOpen(false);
+                    navigate("/register");
+                  }}
+                >
+                  Register
+                </button>
+              </>
+            )}
           </div>
         )}
       </div>

@@ -77,7 +77,6 @@ export default function CategoriesPage() {
   const applyFilters = (e) => {
     e?.preventDefault?.();
     setPage(1);
-    // En móviles, cerrar el panel de filtros después de aplicar
     if (window.innerWidth <= 780) {
       setShowFilters(false);
     }
@@ -172,7 +171,7 @@ export default function CategoriesPage() {
                 <div className="cat-grid">
                   {pageItems.map((p) => (
                     <div key={p.id} className="cat-item">
-                      <ProductCard product={p} />
+                      <ProductCard product={p} compact={true} />
                     </div>
                   ))}
                 </div>

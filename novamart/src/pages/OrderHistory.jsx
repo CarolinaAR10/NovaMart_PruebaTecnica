@@ -1,30 +1,106 @@
-﻿import React from "react";
+﻿import React, { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "../styles/orders.css";
+
+const TABS = ["All", "Processing", "Shipped", "Delivered", "Returns"];
+
+const ORDERS = [
+  { id: "ORD-1001", date: "2025-07-15", status: "Delivered", productName: "Aromatherapy Essential Oil", image: "https://i.imgur.com/1twoaDy.jpeg" },
+  { id: "ORD-1002", date: "2025-07-15", status: "Delivered", productName: "Organic Turmeric Powder", image: "https://i.imgur.com/ZKGofuB.jpeg" },
+  { id: "ORD-1003", date: "2025-07-15", status: "Delivered", productName: "Mini Supplement Bottle", image: "https://i.imgur.com/9DqEOV5.jpeg" },
+  { id: "ORD-1004", date: "2025-07-12", status: "Shipped", productName: "Wireless Earbuds", image: "https://i.imgur.com/BG8J0Fj.jpg" },
+  { id: "ORD-1005", date: "2025-07-10", status: "Processing", productName: "Hydrating Face Serum", image: "https://i.imgur.com/SolkFEB.jpeg" },
+  { id: "ORD-1006", date: "2025-07-01", status: "Returns", productName: "Travel Skincare Set", image: "https://i.imgur.com/Ex5x3IU.jpg" },
+];
+
+const fmtDateLong = (iso) =>
+  new Date(iso).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+
+const cx = (...cls) => cls.filter(Boolean).join(" ");
 
 export default function OrderHistory() {
-  const sample = [
-    { id: "ORD-001", date: "2025-08-01", status: "Delivered", total: 120.5, items: 3 },
-    { id: "ORD-002", date: "2025-08-10", status: "Shipped", total: 25.0, items: 1 },
-  ];
-  const badgeColor = s => s==="Delivered" ? "bg-green-100 text-green-800"
-                     : s==="Shipped" ? "bg-blue-100 text-blue-800" : "bg-yellow-100 text-yellow-800";
+  const navigate = useNavigate();
+  const [tab, setTab] = useState("All");
+
+  const list = useMemo(() => {
+    if (tab === "All") return ORDERS;
+    return ORDERS.filter((o) => o.status === tab);
+  }, [tab]);
 
   return (
-    <main className="max-w-4xl mx-auto px-4 py-6">
-      <h1 className="text-2xl font-bold mb-4">Order History</h1>
-      <div className="space-y-4">
-        {sample.map(o => (
-          <div key={o.id} className="bg-white rounded-lg p-4 shadow-sm flex items-center justify-between">
-            <div>
-              <h3 className="font-medium text-[#2E6FF2]">{o.id}</h3>
-              <p className="text-sm text-gray-500">{o.date} · {o.items} items</p>
-            </div>
-            <div className="text-right">
-              <div className={`inline-block px-3 py-1 rounded ${badgeColor(o.status)} text-sm`}>{o.status}</div>
-              <p className="mt-2 font-semibold">${o.total.toFixed(2)}</p>
-              <button className="mt-2 text-sm text-[#2E6FF2]">View Details</button>
-            </div>
-          </div>
-        ))}
+    <main className="oh-page">
+      <div className="oh-container">
+
+        {/* Tabs */}
+        <div className="oh-tabs">
+          {TABS.map((t) => (
+            <button
+              key={t}
+              onClick={() => setTab(t)}
+              className={cx("oh-tab", tab === t && "is-active")}
+            >
+              {t}
+              {tab === t && <span className="oh-tab-underline" />}
+            </button>
+          ))}
+        </div>
+
+        {/* Lista */}
+        <div className="oh-list">
+          {list.map((o) => (
+            <article key={o.id} className="oh-item">
+              {/* izquierda */}
+              <div className="oh-left">
+                <p className="oh-kicker">
+                  {o.status === "Delivered"
+                    ? `Delivered on ${fmtDateLong(o.date)}`
+                    : o.status === "Shipped"
+                      ? `Shipped on ${fmtDateLong(o.date)}`
+                      : o.status === "Processing"
+                        ? `Processing since ${fmtDateLong(o.date)}`
+                        : o.status === "Returns"
+                          ? `Return started on ${fmtDateLong(o.date)}`
+                          : fmtDateLong(o.date)}
+                </p>
+
+                <button
+                  onClick={() => navigate("/track")}
+                  className="oh-link"
+                >
+                  View Order Details
+                  <svg className="oh-link-ico" viewBox="0 0 20 20" fill="currentColor">
+                    <path
+                      fillRule="evenodd"
+                      d="M10.293 3.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 11-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+
+                <p className="oh-meta">Product Name</p>
+
+                <button
+                  onClick={() => navigate("/track")}
+                  className="oh-cta"
+                >
+                  Track Order
+                  <svg className="oh-cta-ico" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3 7a1 1 0 011-1h11a1 1 0 01.894.553l3 6A1 1 0 0118 14H7a1 1 0 01-1-1V8H4a1 1 0 01-1-1zm3 9a2 2 0 114 0 2 2 0 01-4 0zm10 0a2 2 0 114 0 2 2 0 01-4 0z" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* derecha */}
+              <div className="oh-right">
+                <img src={o.image} alt={o.productName} className="oh-img" loading="lazy" />
+              </div>
+            </article>
+          ))}
+
+          {list.length === 0 && (
+            <p className="oh-empty">No orders found for this filter.</p>
+          )}
+        </div>
       </div>
     </main>
   );

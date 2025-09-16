@@ -1,0 +1,44 @@
+/* Barra */
+.nm-pg{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 28px;                 /* separación como en el figma */
+  padding-top: 24px;
+}
+
+/* Flechas */
+.nm-pg-arrow{
+  width:44px; height:44px;
+  border:none; background:transparent;
+  color:#0f172a;             /* gris muy oscuro */
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+  border-radius:50%;
+  transition:filter .15s ease, opacity .15s ease, background .15s ease;
+}
+.nm-pg-arrow:hover:not(:disabled){
+  background:#f1f5f9;        /* hover muy suave */
+}
+.nm-pg-arrow:disabled{ opacity:.35; cursor:not-allowed; }
+.nm-pg-ico{ width:22px; height:22px; }
+
+/* Números */
+.nm-pg-btn{
+  width:44px; height:44px;   /* Área clicable amplia */
+  border:none; background:transparent;
+  color:#0f172a; font-size:18px; font-weight:500;
+  border-radius:50%;
+  cursor:pointer;
+  transition:background .15s ease, color .15s ease;
+}
+.nm-pg-btn:hover{
+  background:#f1f5f9;        /* hover sutil para no “gritar” */
+}
+
+/* Activo: pastilla/círculo gris-azulado muy claro */
+.nm-pg-btn.active{
+  background:#eef2ff;        /* similar al chip del figma */
+  color:#0f172a;             /* texto oscuro */
+  font-weight:700;
+}

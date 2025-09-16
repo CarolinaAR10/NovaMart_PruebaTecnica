@@ -1,13 +1,13 @@
 ﻿import React from "react";
-import { createRoot } from "react-dom/client";
+import ReactDOM from "react-dom/client";
 import App from "./App";
+// importa TU CSS base si lo tienes:
 import "./index.css";
-import { CartProvider } from "./context/CartContext";
+// importa la compatibilidad de utilidades:
+import "./styles/compat.css";
+import "./styles/theme.css";
+import "./styles/components.css";
+import "./styles/pagination.css";
 
-createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <CartProvider>
-      <App />
-    </CartProvider>
-  </React.StrictMode>
-);
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);

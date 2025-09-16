@@ -1,46 +1,147 @@
 ﻿import React from "react";
-import { Link } from "react-router-dom";
-import { useCart, useCartDispatch } from "../context/CartContext";
+import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
+import { money } from "../lib/format";
+import "../styles/cart.css";
+
+const PLACEHOLDER = "https://placehold.co/120x120?text=No+Image";
+
+// 1) Helper robusto para encontrar la imagen
+function firstUrl(maybe) {
+  if (!maybe) return null;
+  if (Array.isArray(maybe)) return maybe[0] || null;
+  if (typeof maybe === "string") {
+    // si viene como '["url", "url2"]'
+    const s = maybe.trim();
+    if (s.startsWith("[") && s.endsWith("]")) {
+      try {
+        const arr = JSON.parse(s);
+        if (Array.isArray(arr) && arr[0]) return arr[0];
+      } catch {}
+    }
+    return s; // string normal con url
+  }
+  return null;
+}
+
+function getProductImage(item) {
+  // intenta en varios lugares comunes
+  return (
+    firstUrl(item.image) ||
+    firstUrl(item.images) ||
+    firstUrl(item.thumbnail) ||
+    firstUrl(item.product?.image) ||
+    firstUrl(item.product?.images) ||
+    PLACEHOLDER
+  );
+}
 
 export default function Cart() {
-  const { items } = useCart() || { items: [] };
-  const dispatch = useCartDispatch();
-  const subtotal = items.reduce((s, i) => s + i.price * i.qty, 0).toFixed(2);
+  const navigate = useNavigate();
+  const { items, subtotal, shipping, total, removeItem, remove } = useCart();
+
+  const onRemove = (id) => {
+    if (typeof removeItem === "function") return removeItem(id);
+    if (typeof remove === "function") return remove(id);
+    console.warn("Implementa removeItem(id) en CartContext");
+  };
+
+  if (!items.length) {
+    return (
+      <main className="cart-page">
+        <div className="cart-wrap">
+          <h1 className="cart-title">Shopping Cart</h1>
+          <div className="cart-empty">
+            <p>
+              Your cart is empty.
+              <Link to="/" className="cart-link">Continue shopping →</Link>
+            </p>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
-    <main className="max-w-4xl mx-auto px-4 py-6">
-      <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
+    <main className="cart-page">
+      <div className="cart-wrap">
+        <h1 className="cart-title">Shopping Cart</h1>
 
-      <div className="space-y-4">
-        {items.length === 0 && <p>Tu carrito está vacío. <Link to="/" className="text-[#2E6FF2]">Ir a tienda</Link></p>}
-        {items.map(item => (
-          <div key={item.id} className="bg-white p-3 rounded-lg flex items-center gap-4">
-            <img src={item.image} alt={item.title} className="w-20 h-20 object-contain" />
-            <div className="flex-1">
-              <h3 className="font-medium">{item.title}</h3>
-              <p className="text-sm text-gray-500">${item.price}</p>
-              <div className="mt-2 flex items-center gap-2">
-                <button onClick={() => dispatch({ type: "UPDATE_QTY", payload: { id: item.id, qty: Math.max(1, item.qty - 1) } })} className="px-2">-</button>
-                <span>{item.qty}</span>
-                <button onClick={() => dispatch({ type: "UPDATE_QTY", payload: { id: item.id, qty: item.qty + 1 } })} className="px-2">+</button>
-              </div>
-            </div>
-            <div className="text-right">
-              <p className="font-semibold">${(item.price * item.qty).toFixed(2)}</p>
-              <button onClick={() => dispatch({ type: "REMOVE", payload: item.id })} className="text-[#F97316] text-sm mt-2">Remove</button>
-            </div>
+        <section className="cart-list">
+          {items.map((i) => {
+            const src = getProductImage(i);
+            return (
+              <article key={i.id} className="cart-item">
+                <div className="cart-left">
+                  <img
+                    src={src}
+                    alt={i.title}
+                    className="cart-thumb"
+                    loading="lazy"
+                    onError={(e) => (e.currentTarget.src = PLACEHOLDER)}
+                  />
+                  <div className="cart-meta">
+                    <p className="cart-name" title={i.title}>{i.title}</p>
+                    <p className="cart-qty">{i.qty} pc</p>
+                  </div>
+                </div>
+
+                <div className="cart-right">
+                  <div className="cart-price">{money(i.price * i.qty)}</div>
+                  <button
+                    type="button"
+                    className="cart-remove"
+                    onClick={() => onRemove(i.id)}
+                    aria-label={`Remove ${i.title}`}
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </article>
+            );
+          })}
+        </section>
+
+        <section className="cart-summary">
+          <h2 className="cart-h2">Order Summary</h2>
+          <div className="cart-rows">
+            <Row label="Subtotal" value={money(subtotal)} />
+            <Row label="Shipping" value={shipping === 0 ? "Free" : money(shipping)} />
+            {shipping === 0 && <Row label="Free Shipping" value="" />}
+            <Row label="Total" value={money(total)} strong topBorder />
           </div>
-        ))}
-      </div>
 
-      <aside className="mt-6 bg-white p-4 rounded-lg shadow-sm">
-        <div className="flex justify-between mb-2"><span>Subtotal</span><strong>${subtotal}</strong></div>
-        <div className="flex justify-between mb-4"><span>Shipping</span><span className="text-green-600">Free</span></div>
-        <div className="flex justify-between mt-4 text-lg font-bold"><span>Total</span><span>${subtotal}</span></div>
-        <div className="mt-4">
-          <button className="w-full bg-[#2E6FF2] text-white py-2 rounded">Finalize Purchase</button>
-        </div>
-      </aside>
+          <button className="cart-btn" onClick={() => navigate("/track")}>
+            Finalize Purchase
+          </button>
+
+          <div className="cart-continue-wrap">
+            <Link to="/" className="cart-continue">
+              Continue Shopping
+              <svg viewBox="0 0 20 20" className="cart-continue-ico" fill="currentColor">
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M10.293 15.707a1 1 0 010-1.414L12.586 12H4a1 1 0 110-2h8.586l-2.293-2.293a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                />
+              </svg>
+            </Link>
+          </div>
+        </section>
+      </div>
     </main>
+  );
+}
+
+function Row({ label, value, strong = false, topBorder = false }) {
+  return (
+    <div className={"cart-row" + (topBorder ? " cart-row--border" : "")}>
+      <span className={"cart-row-label" + (strong ? " cart-row-label--strong" : "")}>
+        {label}
+      </span>
+      <span className={strong ? "cart-row-value cart-row-value--strong" : "cart-row-value"}>
+        {value}
+      </span>
+    </div>
   );
 }

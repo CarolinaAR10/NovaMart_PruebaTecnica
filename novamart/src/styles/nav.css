@@ -1,0 +1,281 @@
+/* Contenedor fijo arriba */
+.nm-header{
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: #fff;
+  border-bottom: 1px solid #EEF2F7;
+}
+
+/* Ancho y padding del contenedor */
+.nm-container{
+  max-width: 1850px;
+  margin: 0 auto;
+  padding: 10px 2px;
+}
+
+/* Fila del navbar (3 zonas: left / center / right) */
+.nm-nav{
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* separa grupos */
+  gap: 40px;                      /* espacio base entre zonas */
+}
+
+/* ------------ IZQUIERDA: logo + links ------------ */
+.nm-left{
+  display: flex;
+  align-items: center;
+  gap: 40px; /* separa logo de los links */
+}
+
+.nm-brand{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.nm-logo{
+  height: 32px;
+  width: auto;
+  display: block;
+  border-radius: 2px;
+}
+
+.nm-brand-text{
+  font-weight: 700;
+  font-size: 25px;
+  color: #111827;
+}
+
+/* links superiores */
+.nm-links{
+  display: flex;
+  align-items: center;
+  gap: 24px; /* espacio entre links */
+}
+.nm-links a{
+  color: #374151;
+  text-decoration: none;
+  font-size: 16px;
+}
+.nm-links a:hover{ color:#111827; }
+.nm-links a.active,
+.nm-links a[aria-current="page"]{
+  color:#2E6FF2;
+  font-weight: 600;
+}
+
+/* ------------ CENTRO: buscador ------------ */
+.nm-center{
+  flex: 1 1 auto;                 /* permite crecer pero no empuja en exceso */
+  display: flex;
+  justify-content: center;        /* lo centramos en su zona */
+  margin: 0 40px;                 /* aire lateral para que no choque */
+}
+
+.nm-search{
+  position: relative;
+  width: 100%;
+  max-width: 630px;               /* limita ancho del input */
+  background: #F1F5FF;
+  border: 1px solid #E5ECFF;
+  border-radius: 14px;
+  padding: 10px 14px 10px 44px;   /* espacio para icono */
+}
+
+.nm-search-ico{
+  position: absolute;
+  left: 12px; top: 0; bottom: 0;
+  display: flex; align-items: center;
+  color: #5B76B5;
+}
+.nm-search-ico svg{ width: 20px; height: 20px; }
+
+.nm-search-input{
+  width: 100%;
+  border: none; outline: none;
+  font-size: 14px;
+  background: transparent;
+  color: #1F2937;
+}
+
+/* ------------ DERECHA: acciones ------------ */
+.nm-right{
+  display: flex;
+  align-items: center;
+  gap: 18px;                      /* distancia entre corazón, carrito, user */
+}
+
+/* Botón icono “chip” */
+.nm-icon-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px; height: 44px;
+  border-radius: 14px;
+  background: #F3F6FB;
+  border: 1px solid #E9EEF6;
+  color: #374151;
+  cursor: pointer;
+}
+.nm-icon{ width: 20px; height: 20px; }
+
+/* Carrito + badge */
+.nm-cart{ position: relative; display: inline-flex; }
+.nm-cart-ico{ width: 22px; height: 22px; object-fit: contain; }
+.nm-badge{
+  position: absolute;
+  top: -6px; left: 18px;          /* bien alineado en la esquina */
+  background: #F97316; color: #fff;
+  font-size: 12px; font-weight: 700;
+  line-height: 18px; min-width: 18px; height: 18px;
+  border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0 5px;
+}
+
+/* Chip de usuario */
+.nm-user{ position: relative; }
+.nm-user-chip{
+  display: flex; align-items: center; gap: 12px;
+  background: #F3F6FB;
+  border: 1px solid #E9EEF6;
+  padding: 8px 12px;
+  border-radius: 16px;
+  cursor: pointer;
+}
+.nm-avatar{ width: 32px; height: 32px; border-radius: 50%; object-fit: cover; display: block; }
+.nm-chev{ width: 16px; height: 16px; color: #6B7280; }
+
+/* Dropdown del usuario */
+.nm-menu{
+  position: absolute; right: 0; top: calc(100% + 8px);
+  width: 220px; background: #fff;
+  border: 1px solid #E5E7EB; border-radius: 8px;
+  box-shadow: 0 10px 22px rgba(0,0,0,.06);
+  padding: 8px;
+}
+.nm-menu-item{
+  display: block; width: 100%; text-align: left;
+  border: none; background: transparent; cursor: pointer;
+  padding: 8px 10px; border-radius: 6px;
+  color: #374151; text-decoration: none;
+}
+.nm-menu-item:hover{ background: #F6F7FB; }
+.nm-menu-danger{ color: #DC2626; }
+
+/* Botones “guest” */
+.nm-cta{
+  font-size: 14px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: filter .2s ease;
+}
+.nm-cta-primary{ background:#2E6FF2; color:#fff; }
+.nm-cta-primary:hover{ filter:brightness(.95); }
+.nm-cta-ghost{ color:#111827; border-color:#E5E7EB; background:#fff; }
+.nm-cta-ghost:hover{ background:#F9FAFB; }
+
+/* ------------------------------
+   Responsivo (tablet/desktop estrecho)
+   ------------------------------ */
+@media (max-width: 1100px){
+  .nm-nav{ gap: 24px; }
+  .nm-center{ margin: 0 20px; }
+  .nm-search{ max-width: 520px; }
+}
+
+@media (max-width: 900px){
+  .nm-links{ display: none; }   /* oculta links largos si hace falta */
+  .nm-center{ margin: 0 12px; }
+  .nm-search{ max-width: 440px; }
+}
+
+/* ===============================
+   Móvil “estilo Figma” (≤ 680px)
+   =============================== */
+/* Fila 1: [logo]  [NovaMart centrado]  [carrito]
+   Fila 2: buscador full-width */
+@media (max-width: 680px){
+  .nm-container{ padding: 10px 12px; }
+
+  .nm-nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;      /* segunda fila para el buscador */
+    gap:10px;
+  }
+
+  /* -------- Fila superior -------- */
+  .nm-left{
+    order:1;
+    flex:1 1 auto;
+    min-width:0;
+    gap:8px;             /* más compacto */
+    position:relative;
+  }
+  .nm-logo{ height:26px; }
+
+  /* centramos SOLO el texto de marca */
+  .nm-brand{
+    flex:1 1 auto;
+    align-items:center;
+  }
+  .nm-brand-text{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:18px;
+    font-weight:700;
+    white-space:nowrap;
+    pointer-events:none;      /* que no bloquee el logo */
+  }
+
+  /* oculta menú de enlaces en móvil */
+  .nm-links{ display:none !important; }
+
+  .nm-right{
+    order:1;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  /* Mostrar solo carrito en la derecha (favoritos/usuario/CTAs fuera) */
+  .nm-right > :not(.nm-cart){ display:none !important; }
+
+  .nm-icon-btn{ width:40px; height:40px; border-radius:12px; }
+  .nm-cart-ico{ width:20px; height:20px; }
+  .nm-badge{
+    top:-4px; left:16px;
+    min-width:16px; height:16px; line-height:16px;
+    font-size:11px;
+  }
+
+  /* -------- Fila inferior: buscador a todo el ancho -------- */
+  .nm-center{
+    order:2;
+    flex-basis:100%;
+    margin:0;
+  }
+  .nm-search{
+    max-width:none;
+    width:100%;
+    padding:8px 12px 8px 40px;
+    border-radius:12px;
+  }
+  .nm-search-ico{ left:10px; }
+  .nm-search-ico svg{ width:18px; height:18px; }
+  .nm-search-input{ font-size:14px; }
+}
+
+/* Extra-compacto */
+@media (max-width: 420px){
+  .nm-brand-text{ font-size:16px; }
+  .nm-logo{ height:24px; }
+}

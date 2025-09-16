@@ -1,6 +1,133 @@
-﻿/* src/index.css */
-@import "tailwindcss";
-
-body {
-  @apply bg-[#F7FAFC] text-[#262626];
+﻿/* ====== Navbar (estilo Figma) ====== */
+:root{
+  --primary:#2E6FF2;
+  --bg:#F7FAFC;
+  --panel:#ffffff;
+  --soft:#EFF4FA;      /* gris azulado suave de chips */
+  --text:#111827;
+  --muted:#6B7280;
+  --orange:#F97316;
+  --ring: rgba(46,111,242,.15);
 }
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--panel);
+  box-shadow: 0 1px 0 rgba(17, 24, 39, .06);
+}
+
+.header__inner{
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* logo + marca */
+.brand{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.brand img{ height: 32px; width: auto; border-radius: 4px; }
+.brand__name{ font-weight: 700; font-size: 18px; color: var(--text); }
+
+/* navegación compacta */
+.nav{
+  display: none;
+}
+@media (min-width: 768px){
+  .nav{ display:flex; align-items:center; gap:8px; }
+}
+.nav a{
+  font-size: 14px;
+  color: var(--muted);
+  padding: 4px 8px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+.nav a.active{ color: var(--primary); font-weight: 600; }
+
+/* buscador estilo pill con icono */
+.search{
+  position: relative;
+  width: 100%;
+  max-width: 520px;       /* se ve largo como en Figma */
+  margin-left: auto;      /* empuja hacia la izquierda del bloque de acciones */
+  margin-right: 8px;
+}
+.search__icon{
+  position: absolute; inset: 0 auto 0 12px;
+  display:flex; align-items:center;
+  color: #6B82AE;
+}
+.search input{
+  width: 100%;
+  height: 40px;
+  border: 1px solid transparent;
+  background: var(--soft);
+  border-radius: 12px;
+  padding: 0 14px 0 40px;   /* espacio para icono */
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+}
+.search input::placeholder{ color:#8AA0C9; }
+.search input:focus{
+  background: #F3F7FD;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+/* bloque de acciones (corazón, carro, avatar) */
+.actions{
+  display:flex; align-items:center; gap: 12px;
+}
+
+/* botón “chip” para iconos */
+.icon-btn{
+  width: 44px; height: 44px;
+  display:inline-flex; align-items:center; justify-content:center;
+  background: var(--soft);
+  border: 1px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.icon-btn:hover{ filter: brightness(0.98); }
+.icon-btn svg{ width: 22px; height: 22px; color:#2C3B4E; }
+.icon-btn img{ width: 22px; height: 22px; object-fit: contain; }
+
+/* avatar sin chip (solo círculo) */
+.avatar{
+  width: 44px; height: 44px;
+  border-radius: 9999px;
+  object-fit: cover;
+  display:block;
+}
+
+/* badge del carro */
+.badge{
+  position:absolute;
+  top:-6px; right:-8px;
+  background: var(--orange);
+  color:#fff;
+  font-size: 11px;
+  line-height: 1;
+  border-radius: 9999px;
+  padding: 3px 6px;
+  font-weight: 700;
+}
+
+/* contenedor del usuario (chip claro detrás flecha y avatar, como en figma) */
+.user-chip{
+  display:flex; align-items:center; gap:10px;
+  background: var(--soft);
+  border-radius: 12px;
+  padding: 4px 10px 4px 6px;
+}
+.user-chip .chev{ width:18px; height:18px; color:#6B7280; }

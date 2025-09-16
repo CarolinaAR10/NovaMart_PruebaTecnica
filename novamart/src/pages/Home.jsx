@@ -1,8 +1,9 @@
-// src/pages/Home.jsx
 import React, { useEffect, useState } from "react";
 import { listProducts } from "../services/products";
 import ProductCard from "../components/ProductCard";
 import Pagination from "../components/Pagination";
+import hero from "../assets/login.jpg";            // usa tu banner preferido
+import "../styles/home.css";
 
 export default function Home() {
   const [items, setItems] = useState([]);
@@ -18,8 +19,8 @@ export default function Home() {
       try {
         setLoading(true);
         setErr("");
-        const { items } = await listProducts({ offset: 0, limit: 50 });
-        if (!cancel) setItems(items);
+        const { items } = await listProducts({ offset: 0, limit: 60 });
+        if (!cancel) setItems(items || []);
       } catch (e) {
         if (!cancel) setErr(e?.message || "Error");
       } finally {
@@ -34,25 +35,43 @@ export default function Home() {
   const pages = Math.max(1, Math.ceil(items.length / perPage));
 
   return (
-    <main className="bg-[#F7FAFC] min-h-screen pb-20">
-      <div className="mx-auto max-w-7xl px-6 py-10">
-        {err && (
-          <div className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">
-            {err}
-          </div>
-        )}
+    <main className="home-page">
+      <div className="home-wrap">
 
+        {err && <div className="home-alert">{err}</div>}
+
+        {/* HERO debajo del buscador del navbar */}
+        <section className="home-hero">
+          <img src={hero} alt="Find what you need at NovaMart" />
+          <div className="home-hero-copy">
+            <h2>Find what you need at<br/>NovaMart</h2>
+          </div>
+        </section>
+
+        {/* Si tienes sección de categorías, colócala aquí */}
+
+        <header className="home-head">
+          <h1 className="home-title">Featured Products</h1>
+        </header>
+
+        {/* GRID de productos */}
         {loading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+          <div className="home-grid">
             {Array.from({ length: perPage }).map((_, i) => (
-              <div key={i} className="h-64 rounded-2xl bg-gray-200 animate-pulse" />
+              <div key={i} className="home-skel">
+                <div className="home-skel-img" />
+                <div className="home-skel-line" />
+                <div className="home-skel-line short" />
+              </div>
             ))}
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+            <div className="home-grid">
               {pageItems.map((p) => (
-                <ProductCard key={p.id} product={p} />
+                <div key={p.id} className="home-card">
+                  <ProductCard product={p} />
+                </div>
               ))}
             </div>
 

@@ -1,0 +1,54 @@
+:root{
+  --home-bg:#F7FAFC; --home-text:#111827; --home-muted:#6b7280; --home-border:#eef2f7;
+}
+
+.home-page{ min-height:100vh; background:var(--home-bg); padding-bottom:28px; }
+.home-wrap{ max-width:1200px; margin:0 auto; padding:16px; }
+
+/* ALERT */
+.home-alert{ margin-bottom:12px; border:1px solid #fecaca; background:#fff5f5; color:#b91c1c; border-radius:10px; padding:10px 12px; }
+
+/* HERO (debajo del buscador) */
+.home-hero{ position:relative; overflow:hidden; border-radius:16px; margin-bottom:16px; }
+.home-hero img{ width:100%; display:block; aspect-ratio: 16/9; object-fit:cover; }
+.home-hero-copy{
+  position:absolute; left:16px; bottom:14px; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.35);
+}
+.home-hero-copy h2{ margin:0; font-size:22px; font-weight:800; line-height:1.15; }
+
+/* HEAD */
+.home-head{ margin:8px 0 10px; }
+.home-title{ font-size:18px; font-weight:800; letter-spacing:-.01em; color:var(--home-text); margin:0; }
+
+/* GRID – 2 columnas en móvil */
+.home-grid{
+  display:grid; gap:12px;
+  grid-template-columns: repeat(2, 1fr);     /* 👈 2 columnas móviles */
+}
+
+/* En tablets/desktop crecemos a 3-4 columnas */
+@media (min-width: 640px){
+  .home-title{ font-size:22px; }
+  .home-grid{ gap:16px; grid-template-columns: repeat(3, 1fr); }
+  .home-hero-copy h2{ font-size:28px; }
+}
+@media (min-width: 1024px){
+  .home-grid{ gap:20px; grid-template-columns: repeat(5, 1fr); }
+  .home-hero img{ aspect-ratio: 21 / 9; }
+  .home-hero-copy h2{ font-size:32px; }
+}
+
+/* Ajusta las cards para que no desborden */
+.home-card{ width:100%; min-width:0; }
+
+/* Si tu ProductCard no fuerza tamaño de imagen, esto ayuda */
+.home-card img{
+  width:100%; display:block; aspect-ratio: 4 / 5; object-fit:cover; border-radius:14px;
+}
+
+/* Skeletons */
+.home-skel{ border:1px solid var(--home-border); border-radius:16px; background:#fff; padding:10px; }
+.home-skel-img{ aspect-ratio:4/5; width:100%; border-radius:12px; background:#e5e7eb; animation:pulse 1.4s ease-in-out infinite; }
+.home-skel-line{ height:10px; border-radius:6px; background:#e5e7eb; margin-top:10px; animation:pulse 1.4s ease-in-out infinite; }
+.home-skel-line.short{ width:60%; }
+@keyframes pulse{ 0%{opacity:.6} 50%{opacity:1} 100%{opacity:.6} }

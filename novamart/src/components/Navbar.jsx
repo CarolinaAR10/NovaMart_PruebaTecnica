@@ -125,13 +125,6 @@ export default function Navbar() {
                     >
                       Profile
                     </NavLink>
-                    <NavLink
-                      to="/orders"
-                      onClick={() => setOpen(false)}
-                      className="nm-menu-item"
-                    >
-                      My Orders
-                    </NavLink>
                     <button
                       className="nm-menu-item nm-menu-danger"
                       onClick={() => {

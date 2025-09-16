@@ -2,7 +2,7 @@
 
 NovaMart es un **frontend de e-commerce** construido con **React + Vite** que consume la API pública de EscuelaJS. Incluye **listado y búsqueda de productos**, **detalle**, **carrito**, **autenticación básica**, **historial de pedidos (mock)** y **UI responsive** con navbar y **barra inferior móvil**.
 
-> **Nota de veracidad:** este README se basa en los archivos y fragmentos que compartiste (componentes, servicios, estilos y configuración). Si hay archivos adicionales en el repo que no vimos, ajusta el contenido según aplique.
+Front en Render: https://novamart-pruebatecnica-2.onrender.com
 
 ---
 
@@ -240,12 +240,6 @@ Base: `VITE_API_URL` (p.ej. `https://api.escuelajs.co/api/v1`)
 - **Búsqueda**: es **client-side** sobre un **pool limitado** (`limitPool`).
 - **Relaciones**: `relatedById` depende de la API.
 - **Auth**: token en `localStorage`; se recomienda interceptor en `api.js`.
-
----
-
-## Licencia
-
-Indica aquí la licencia del proyecto (MIT, Apache-2.0, privada, etc.).
 
 ---
 

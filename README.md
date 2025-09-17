@@ -171,6 +171,7 @@ npm start
 - `npm run build` — compila a `dist/`.
 - `npm start` — previsualiza la build (útil para Web Service en Render).
 
+### Borre el package-lock.json si es necesario o si marca error y vuelva a instalar todo
 ---
 
 ## Flujo funcional

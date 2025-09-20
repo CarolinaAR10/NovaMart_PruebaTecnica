@@ -6,7 +6,7 @@ Front en Render: https://novamart-pruebatecnica-2.onrender.com
 
 ---
 
-## 🧭 Tabla de contenido
+## Tabla de contenido
 
 - [¿Por qué se creó?](#por-qué-se-creó)
 - [Tecnologías](#tecnologías)
